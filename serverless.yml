@@ -1,0 +1,59 @@
+service: fileupload
+frameworkVersion: '2'
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-stack-output
+
+custom:
+  bucket-name: ${file(./config.${self:provider.stage}.json):BUCKET_NAME}
+  output:
+    file: output-stack.yml
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-east-1
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!.gitignore'
+    - '!.npmignore'
+    - '!*.json'
+  individually: true
+
+functions:
+  TestFunction:
+    name: ${self:service}-function-${self:provider.stage}
+    handler: handler.lambda_handler
+    events:
+      - http:
+          path: upload
+          method: post
+          cors: true
+    environment:
+      BUCKET_NAME: !Ref FileBucket
+    iamRoleStatements:
+      - Effect: Allow
+        Action: s3:*
+        Resource: 
+          - !GetAtt FileBucket.Arn
+          - !Join ['/', [!GetAtt FileBucket.Arn, '*']]
+
+resources:
+  Resources:
+    FileBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucket-name}-${self:provider.stage}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true

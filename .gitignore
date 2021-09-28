@@ -1,0 +1,4 @@
+node_modules
+config.dev.json
+output-stack.yml
+.serverless
