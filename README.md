@@ -7,7 +7,7 @@
 - Node
 - Serverless Framework must be installed on your machine
 
-Follow the below steps to deploy this small module to AWS Cloud 
+**Follow the below steps to deploy this small module to AWS Cloud** 
 
 1. Clone this repo.
 2. Install dependencies using `npm install`.
@@ -25,7 +25,7 @@ At the end run the below command.
 serverless deploy
 ```
 
-Follow the below steps to remove this small module from AWS Cloud 
+**Follow the below steps to remove this small module from AWS Cloud** 
 
 1. First, empty your s3 bucket from console.
 2. Go to the inside of your project folder on your machine.
