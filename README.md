@@ -12,7 +12,7 @@
 1. Clone this repo.
 2. Install dependencies using `npm install`.
 3. Create config file with this name `config.stage.json`. Stage will be your appication stage e.g. `dev`, `test` or `prod`.
-4. Write unique name of your bucker in config file.
+4. Write unique name of your bucket in config file.
     * The following rules apply for naming buckets in Amazon S3
         - Bucket names must be between 3 and 63 characters long.
         - Bucket names can consist only of lowercase letters, numbers, dots (.), and hyphens (-). 
